@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="FreeDeshadow: Shadow Removal for User-Specified Objects With Multimodal Prompts">
+  <meta name="keywords" content="FreeDeshadow, controllable shadow removal, object-aware reasoning, prompt-aware image editing, image restoration, PCSRD+">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FreeDeshadow</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+
+<body>
+  <nav class="navbar is-light" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="#top"><strong>FreeDeshadow</strong></a>
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div class="navbar-menu">
+      <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+        <a class="navbar-item" href="#abstract">Abstract</a>
+        <a class="navbar-item" href="#method">Method</a>
+        <a class="navbar-item" href="#dataset">Dataset</a>
+        <a class="navbar-item" href="#qualitative">Visual Results</a>
+        <a class="navbar-item" href="#bibtex">BibTeX</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero gs-hero" id="top">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">FreeDeshadow: Shadow Removal for User-Specified Objects With Multimodal Prompts</h1>
+            <div class="is-size-5 publication-authors" style="margin-top: 1rem;">
+              <span class="author-block">Zhiliang Wu<sup>1</sup>,</span>
+              <span class="author-block">Jihao Gu<sup>2</sup>,</span>
+              <span class="author-block">Kun Li<sup>3</sup>,</span>
+              <span class="author-block">Hanyu Xuan<sup>4</sup>,</span>
+              <span class="author-block">Hehe Fan<sup>5</sup>,</span>
+              <span class="author-block">Meng Wang<sup>6</sup>,</span>
+              <span class="author-block">Weisi Lin<sup>1</sup></span>
+            </div>
+            <div class="is-size-6 publication-affiliations">
+              <span class="author-block"><sup>1</sup>Nanyang Technological University</span>
+              <span class="author-block"><sup>2</sup>University College London</span>
+              <span class="author-block"><sup>3</sup>United Arab Emirates University</span>
+              <span class="author-block"><sup>4</sup>Anhui University</span>
+              <span class="author-block"><sup>5</sup>Zhejiang University</span>
+              <span class="author-block"><sup>6</sup>Hefei University of Technology</span>
+            </div>
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Code</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#bibtex" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-quote-right"></i></span>
+                  <span>BibTeX</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section teaser-section">
+    <div class="container is-max-desktop">
+      <figure class="image paper-figure teaser-figure">
+        <img src="./static/images/teaser.jpg" alt="Overview of object-aware controllable shadow removal">
+      </figure>
+      <p class="figure-caption">
+        Overview of object-aware controllable shadow removal. The object-aware shadow removal framework identifies the target object and selectively removes its cast shadow while preserving shadows belonging to other objects. Rather than relying on precise shadow-region masks as control inputs, FreeDeshadow enables flexible control through visual prompts of varying granularity (dots, lines, or object masks) and textual prompts describing attributes, spatial relations, or states.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="abstract">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Existing shadow removal methods either perform global shadow removal or rely on precise shadow masks to guide restoration. Such paradigms limit their ability to selectively remove the shadow cast by a user-specified object in practical applications. To this end, we introduce an object-aware controllable shadow removal task, which allows users to specify a target object through a simple prompt and removes only its cast shadow while preserving other content. However, object–shadow asymmetry makes it challenging to establish accurate correspondence between the specified object and its spatially separated cast shadow and to confine restoration to the target shadow region. To address these challenges, we propose <strong>FreeDeshadow</strong>, a unified controllable shadow removal framework that supports both visual and textual prompts. It consists of an object-aware generator and a shadow-aware local refiner. The former interprets the user prompt and produces a high-quality shadow-free proposal, while the latter establishes the correspondence between the object and its cast shadow and constrains the generated changes to the target shadow region. To support training and evaluation, we further construct <strong>PCSRD+</strong>, a large-scale dataset containing 154,571 quadruples at 1024×1024 resolution and covering six types of user prompts. The visual prompts include a dot, a line, and an object mask, while the textual prompts describe the target object using attributes, spatial relations, or states. Extensive experiments demonstrate that FreeDeshadow accurately removes the shadow of the target object under both visual and textual prompts while effectively preserving non-target regions. It also outperforms existing methods in shadow removal performance and controllability.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-light" id="method">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Method</h2>
+      <figure class="image paper-figure">
+        <img src="./static/images/framework.png" alt="Overview of the FreeDeshadow framework">
+      </figure>
+      <div class="content has-text-justified method-text">
+        <p>Overview of the FreeDeshadow framework. (a) The object-aware generator employs Qwen2.5-VL to extract multimodal features from the input image and user prompt, and leverages pretrained generative priors to produce a high-quality shadow-free proposal. (b) The shadow-aware local refiner transforms the multimodal features into sparse shadow prompts and employs cross-scale feature interactions to establish the correspondence between the specified object and its cast shadow. Guided by this correspondence, the refiner aggregates the shadow-free proposal with the latent features of the source image, thereby constraining the generated changes to the target shadow region while preserving non-target content.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="dataset">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">PCSRD+ Dataset</h2>
+      <div class="columns is-variable is-5">
+        <div class="column is-6">
+          <figure class="image paper-figure">
+            <img src="./static/images/dataset_pipeline.png" alt="Pipeline for the construction of PCSRD+">
+          </figure>
+          <p class="figure-caption">Pipeline for the construction of PCSRD+.</p>
+        </div>
+        <div class="column is-6">
+          <figure class="image paper-figure">
+            <img src="./static/images/dataset_stats.png" alt="Statistics for the PCSRD+ dataset">
+          </figure>
+          <p class="figure-caption">Statistics for the PCSRD+ dataset.</p>
+        </div>
+      </div>
+      <div class="content has-text-justified dataset-text">
+        <p>Existing shadow removal datasets mainly provide image-level shadow masks. They lack the object-level prompts needed to remove the shadow of a specific object. To fill this gap, we construct <strong>PCSRD+</strong>, an object-aware controllable shadow removal dataset built upon DESOBAv2. Each sample is a quadruple of a shadow image, a user prompt, the shadow mask of the specified object, and the shadow-free image. PCSRD+ covers six prompt types. The three visual prompts are a dot, a line, and an object mask. They specify the target object with increasing spatial support. The three textual prompts describe the target object by its attributes, spatial relations, or states. They require the model to identify the object through reasoning rather than explicit spatial cues. The dataset is built in three steps: data curation, object-aware reasoning prompt generation, and data filtering and quality control. Textual prompts are first generated by a VLM. They are then checked by an MLLM-as-a-Judge and corrected by human annotators. The final dataset contains 154,571 samples at 1024×1024 resolution, including 150,516 training samples and 4,055 test samples.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-light" id="qualitative">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Visual Results</h2>
+      <div class="tabs is-centered is-toggle is-small degradation-tabs">
+        <ul>
+          <li class="is-active" data-target="vis-prompts"><a>Six Prompt Types</a></li>
+          <li data-target="vis-editing"><a>vs. Image Editing</a></li>
+          <li data-target="vis-removal"><a>vs. Shadow Removal</a></li>
+          <li data-target="vis-real"><a>Real Images</a></li>
+          <li data-target="vis-multi"><a>Multi-Object</a></li>
+          <li data-target="vis-zeroshot"><a>Zero-Shot</a></li>
+          <li data-target="vis-control"><a>Controllability</a></li>
+        </ul>
+      </div>
+      <div class="vis-panel" id="vis-prompts">
+        <figure class="image paper-figure"><img src="./static/images/all_prompts.jpg" alt="Qualitative results on all visual and textual prompts"></figure>
+        <p class="figure-caption">Qualitative results on all visual and textual prompts from the PCSRD+ dataset.</p>
+        <p class="vis-desc">FreeDeshadow associates each visual or textual prompt with the cast shadow of the target object. Most restored images exceed 30 dB in PSNR, and the predicted shadow masks closely match the ground truth.</p>
+      </div>
+      <div class="vis-panel" id="vis-editing" hidden>
+        <figure class="image paper-figure narrow-figure"><img src="./static/images/editing_comparison.jpg" alt="Qualitative comparison across six prompt types"></figure>
+        <p class="figure-caption">Qualitative comparison across six prompt types. The scalar denotes the all-region PSNR of each sample.</p>
+        <p class="vis-desc">General image editing models often change the target object, misjudge the shadow boundary, or shift colors. FreeDeshadow removes only the target shadow under all six prompt types and preserves the other content.</p>
+      </div>
+      <div class="vis-panel" id="vis-removal" hidden>
+        <figure class="image paper-figure"><img src="./static/images/shadow_removal_comparison.jpg" alt="Comparison with existing shadow removal methods"></figure>
+        <p class="figure-caption">Comparison with existing shadow removal methods.</p>
+        <p class="vis-desc">These shadow removal methods require precise shadow masks as input. FreeDeshadow uses only object-level visual prompts and still recovers finer textures in the shadow regions.</p>
+      </div>
+      <div class="vis-panel" id="vis-real" hidden>
+        <figure class="image paper-figure narrow-figure"><img src="./static/images/real_images.jpg" alt="Real-image shadow removal under visual prompts"></figure>
+        <p class="figure-caption">Real-image shadow removal under visual prompts.</p>
+        <p class="vis-desc">FreeDeshadow removes target shadows in real-world scenes such as parks and city streets. The restored regions blend naturally with the surrounding illumination and colors.</p>
+      </div>
+      <div class="vis-panel" id="vis-multi" hidden>
+        <figure class="image paper-figure narrow-figure"><img src="./static/images/multi_object.jpg" alt="Visualization of multi-object shadow removal"></figure>
+        <p class="figure-caption">Visualization of multi-object shadow removal.</p>
+        <p class="vis-desc">FreeDeshadow removes the shadows of all specified objects, including adjacent and partially overlapping shadows. Non-shadow regions show no visible color shift or structural distortion.</p>
+      </div>
+      <div class="vis-panel" id="vis-zeroshot" hidden>
+        <figure class="image paper-figure narrow-figure"><img src="./static/images/zero_shot.jpg" alt="Zero-shot cross-dataset results"></figure>
+        <p class="figure-caption">Zero-shot cross-dataset results. The model is evaluated on images from the WSRD dataset without fine-tuning.</p>
+        <p class="vis-desc">Without fine-tuning, FreeDeshadow still removes the shadow of the specified object on unseen WSRD images. Fine details such as handwritten text are well recovered inside the shadow region.</p>
+      </div>
+      <div class="vis-panel" id="vis-control" hidden>
+        <figure class="image paper-figure narrow-figure"><img src="./static/images/controllability.jpg" alt="Qualitative results of FreeDeshadow's controllability"></figure>
+        <p class="figure-caption">Qualitative results of FreeDeshadow's controllability.</p>
+        <p class="vis-desc">FreeDeshadow removes only the shadows of the selected objects as the number or choice of objects changes. The remaining image content stays unchanged.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="conclusion">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Conclusion</h2>
+      <div class="content has-text-justified">
+        <p>
+          This paper presents FreeDeshadow, a unified framework for object-aware controllable shadow removal. FreeDeshadow selectively removes the shadow cast by a user-specified object according to a visual or textual prompt, while preserving the object itself, other shadows, and the background content. To support training and evaluation, we further construct PCSRD+, a large-scale high-resolution dataset containing 154,571 quadruples covering three visual and three textual prompts. Extensive experiments demonstrate that FreeDeshadow achieves strong performance in both shadow removal quality and controllability. Beyond shadow removal, this work highlights a broader challenge in controllable image editing, where the user-specified object and the region to be edited are spatially separated and exhibit distinct visual characteristics. This object–effect discrepancy requires establishing accurate associations between objects and their corresponding visual effects while preserving unrelated scene content. Our study provides insights into this challenge and may inspire future research on other object-associated visual effects, such as reflections and localized illumination.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-light" id="bibtex">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@article{wu2026freedeshadow,
+  author={Zhiliang Wu and Jihao Gu and Kun Li and Hanyu Xuan and Hehe Fan and Meng Wang and Weisi Lin},
+  title={FreeDeshadow: Shadow Removal for User-Specified Objects With Multimodal Prompts},
+  journal={Under Review},
+  year={2026}
+}</code></pre>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content has-text-centered">
+            <p>
+              Project page for <strong>FreeDeshadow</strong>.
+            </p>
+            <p>
+              Website template adapted from the <a href="https://github.com/nerfies/nerfies.github.io">Nerfies project page</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.degradation-tabs li').forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        document.querySelectorAll('.degradation-tabs li').forEach(function (t) { t.classList.remove('is-active'); });
+        tab.classList.add('is-active');
+        document.querySelectorAll('.vis-panel').forEach(function (p) { p.hidden = (p.id !== tab.dataset.target); });
+      });
+    });
+  </script>
+</body>
+
+</html>
